@@ -25,6 +25,7 @@ router.post("/", async (req, res) => {
 
   res.send(token);
 });
+//Login Input validation
 function validate(user) {
   const Schema = {
     email: Joi.string().required().email(),
