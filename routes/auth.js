@@ -33,4 +33,20 @@ function validate(user) {
   };
   return Joi.validate(user, Schema);
 }
+
+router.post("/token", async (req, res) => {
+  const tkn = req.body.token;
+  try {
+    const decode = jwt.verify(tkn, process.env.COMPUTERNAME);
+    const user = await User.findOne({
+      email: decode.email,
+    });
+    if (user) {
+      res.send(true);
+    }
+  } catch (ex) {
+    // res.status(400).send("invalid token");
+    res.send(false);
+  }
+});
 module.exports = router;
