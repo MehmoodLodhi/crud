@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     minLength: 8,
   },
-  isAdmin: Boolean,
+  address: String,
 });
 userSchema.methods.authToken = function () {
   const token = jwt.sign(

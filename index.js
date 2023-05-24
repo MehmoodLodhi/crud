@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const user = require("./routes/users");
-
+const { getuser } = require("./Utility");
 const product = require("./routes/products");
 const order = require("./routes/orders");
 const auth = require("./routes/auth");
@@ -21,6 +21,7 @@ async function db() {
     .then(() => console.log("Connected to DB"))
     .catch((err) => console.log(err));
   app.listen(3000, () => console.log("listening on port 3000"));
+  getuser();
 }
 
 db();
