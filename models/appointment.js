@@ -4,15 +4,16 @@ const Joi = require("joi");
 const appointmentSchema = new mongoose.Schema({
   doc_id: mongoose.Schema.Types.ObjectId,
   pat_id: mongoose.Schema.Types.ObjectId,
-  time: Date,
+  start_time: Number,
+  end_time: Number,
 });
 const Appointment = mongoose.model("Appointment", appointmentSchema);
 
 function validate(appointment) {
   const Schema = {
     doc_id: Joi.required(),
-    pat_id: Joi.required(),
-    time: Joi.required(),
+    start_time: Joi.date().timestamp().required(),
+    end_time: Joi.date().timestamp().greater(Joi.ref("start_time")).required(),
   };
   return Joi.validate(appointment, Schema);
 }

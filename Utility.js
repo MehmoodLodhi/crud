@@ -8,4 +8,9 @@ async function getuser() {
   });
 }
 
+const epochToDate = (timeStamp) => {
+  return new Date(timeStamp).toLocaleString();
+};
+
 module.exports.getuser = getuser;
+module.exports.epochToDate = epochToDate;
