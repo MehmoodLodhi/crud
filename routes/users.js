@@ -3,19 +3,32 @@ const router = express.Router();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 
 const { User, validate } = require("../models/user");
 
 router.get("/getUsers", auth, async (req, res) => {
   try {
-    const users = await User.find().select(["_id", "name", "email"]);
-    res.send(users);
+    if (req.user.role == "admin") {
+      const users = await User.find();
+      return res.send(users);
+    }
+    if (req.user.role == "doctor") {
+      const users = await User.find({ role: "patient" });
+      return res.send(users);
+    }
+    if (req.user.role == "patient") {
+      const users = await User.find({ role: "doctor" });
+      return res.send(users);
+    }
+
+    res.send("Invalid Role");
   } catch (e) {
     res.send(e);
   }
 });
 
-router.post("/addUser", async (req, res) => {
+router.post("/addUser", [auth, admin], async (req, res) => {
   const { error } = validate(req.body);
   if (error) {
     return res.send(error.details[0].message);
@@ -36,6 +49,12 @@ router.post("/addUser", async (req, res) => {
   } catch (e) {
     res.send(e);
   }
+});
+
+router.delete("/deleteOne", [auth, admin], async (req, res) => {
+  const user = await User.findByIdAndDelete({ _id: req.body.id });
+
+  res.send(user);
 });
 
 module.exports = router;

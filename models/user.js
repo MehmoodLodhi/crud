@@ -12,11 +12,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     minLength: 8,
   },
-  address: String,
+  role: String,
 });
 userSchema.methods.authToken = function () {
   const token = jwt.sign(
-    { _id: this._id, email: this.email },
+    { _id: this._id, email: this.email, role: this.role },
     process.env.COMPUTERNAME
   );
   return token;
@@ -29,6 +29,7 @@ function validate(user) {
     name: Joi.string().min(5).required(),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
+    role: Joi.string().required(),
   };
   return Joi.validate(user, Schema);
 }
