@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const Joi = require("joi");
 
 const { User } = require("../models/user");
+const { Otp } = require("../models/otp");
 
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
@@ -22,6 +23,15 @@ router.post("/", async (req, res) => {
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) return res.status(400).send("Invalid password");
   const token = user.authToken();
+  const userotp = await Otp.findOne({ user_id: user._id });
+  if (userotp.isExpire == false) {
+    let response = {
+      token: token,
+      status: "user not verified",
+    };
+    return res.send(response);
+  }
+  console.log(userotp);
 
   res.send(token);
 });
