@@ -28,7 +28,6 @@ async function db() {
     .then(() => console.log("Connected to DB"))
     .catch((err) => console.log(err));
   app.listen(3000, () => console.log("listening on port 3000"));
-  getuser();
 }
 
 db();
