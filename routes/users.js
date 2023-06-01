@@ -59,6 +59,7 @@ router.post("/addUser", async (req, res) => {
     await user_otp.save();
     await ourMail(user.email, otp);
     await user.save();
+    console.log(token);
     return res.status(200).send({ token });
   } catch (e) {
     res.send(e);
