@@ -10,6 +10,11 @@ const otp = require("./routes/otp");
 const app = express();
 app.use(express.json());
 
+const cors = require("cors");
+
+app.use(cors());
+app.options("*", cors());
+
 app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/product", product);
