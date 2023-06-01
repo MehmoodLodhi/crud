@@ -16,6 +16,9 @@ app.use("/api/product", product);
 app.use("/api/order", order);
 app.use("/api/appointment", appointment);
 app.use("/api/otp", otp);
+app.get("/", (req, res) => {
+  res.send("Server Configured ");
+});
 async function db() {
   await mongoose
     .connect(
