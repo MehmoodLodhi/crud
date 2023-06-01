@@ -1,5 +1,8 @@
 var nodemailer = require("nodemailer");
 
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
 const oauth2Client = new OAuth2(
   "299060008480-o9bh6a2524jh27oa8emhus8a7aa1rsei.apps.googleusercontent.com", //Client ID
   "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", // Client Secret
