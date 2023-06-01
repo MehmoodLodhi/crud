@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const cors = require("cors");
 const user = require("./routes/users");
 const { getuser } = require("./Utility");
 const product = require("./routes/products");
@@ -9,8 +10,6 @@ const appointment = require("./routes/appointments");
 const otp = require("./routes/otp");
 const app = express();
 app.use(express.json());
-
-const cors = require("cors");
 
 app.use(cors());
 app.options("*", cors());
