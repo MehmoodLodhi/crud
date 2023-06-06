@@ -69,8 +69,7 @@ router.delete("/deleteOne", [auth, admin], async (req, res) => {
 });
 
 router.get("/testMail", async (req, res) => {
-  await ourMail("mehmoodlodhi3@gmail.com", "11223344");
-
+  await ourMail("usamaliaqat08.com", "MyToken12221");
   res.send("Otp Sent");
 });
 
