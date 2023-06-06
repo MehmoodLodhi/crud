@@ -80,7 +80,7 @@ router.get("/testMail", async (req, res) => {
   });
   let mailOptions = {
     from: "mehmoodlodhi3@gmail.com",
-    to: "usamaliaqat08@gmail.com",
+    to: req.body.mail,
     subject: "OTP here",
     html: "Hello kiddan pharo apna OTP: " + "My OTP",
   };
