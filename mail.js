@@ -8,7 +8,7 @@ const smtpTransport = nodemailer.createTransport({
   },
 });
 async function ourMail(email, otp) {
-  const mailOptions = {
+  let mailOptions = {
     from: "mehmoodlodhi3@gmail.com",
     to: email,
     subject: "OTP here",

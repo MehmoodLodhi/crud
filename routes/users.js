@@ -43,29 +43,27 @@ router.post("/addUser", async (req, res) => {
   });
   ////////////
   if (user) return res.send("User Already exist");
-  // try {
-  user = new User(req.body);
-  user.email = email;
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(user.password, salt);
-  const token = user.authToken();
-  //Generate and save User Otp
-  const otp = otpGenerator.generate(6, {
-    upperCaseAlphabets: false,
-    specialChars: false,
-  });
+  try {
+    user = new User(req.body);
+    user.email = email;
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+    const token = user.authToken();
+    //Generate and save User Otp
+    const otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      specialChars: false,
+    });
 
-  const user_otp = new Otp({ user_id: user._id, value: otp });
-  await user_otp.save();
-  await ourMail(user.email, otp);
-
-  // res.send(JSON.stringify(emailRes));
-  // await user.save();
-  // console.log(token);
-  // return res.status(200).send({ token });
-  // } catch (e) {
-  //   res.send(e);
-  // }
+    const user_otp = new Otp({ user_id: user._id, value: otp });
+    await user_otp.save();
+    await ourMail(user.email, otp);
+    await user.save();
+    console.log(token);
+    return res.status(200).send({ token });
+  } catch (e) {
+    res.send(e);
+  }
 });
 
 router.delete("/deleteOne", [auth, admin], async (req, res) => {
