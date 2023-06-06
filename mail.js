@@ -1,13 +1,13 @@
 var nodemailer = require("nodemailer");
 
-const smtpTransport = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "mehmoodlodhi3@gmail.com",
-    pass: "picscecsxaqjcbjd",
-  },
-});
 async function ourMail(email, otp) {
+  const smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "mehmoodlodhi3@gmail.com",
+      pass: "picscecsxaqjcbjd",
+    },
+  });
   let mailOptions = {
     from: "mehmoodlodhi3@gmail.com",
     to: email,

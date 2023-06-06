@@ -58,8 +58,7 @@ router.post("/addUser", async (req, res) => {
 
   const user_otp = new Otp({ user_id: user._id, value: otp });
   await user_otp.save();
-  res.send(user);
-  return;
+
   await ourMail(user.email, otp);
   await user.save();
   return res.status(200).send({ token });
