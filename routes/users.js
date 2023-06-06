@@ -44,7 +44,7 @@ router.post("/addUser", async (req, res) => {
   ////////////
   if (user) return res.send("User Already exist");
   // try {
-  const user = new User(req.body);
+  user = new User(req.body);
   user.email = email;
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
