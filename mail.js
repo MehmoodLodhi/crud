@@ -16,8 +16,8 @@ async function ourMail(email, otp) {
   };
 
   smtpTransport.sendMail(mailOptions, (error, response) => {
-    return error ? error : console.log("OTP sent to: " + email);
-    // smtpTransport.close();
+    error ? console.log(error) : console.log("OTP sent to: " + email);
+    smtpTransport.close();
   });
 }
 
