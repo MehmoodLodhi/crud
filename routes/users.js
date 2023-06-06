@@ -38,7 +38,7 @@ router.post("/addUser", async (req, res) => {
   }
   //////
   const email = req.body.email.toLowerCase();
-  const user = await User.findOne({
+  let user = await User.findOne({
     email: email,
   });
   ////////////
@@ -57,8 +57,9 @@ router.post("/addUser", async (req, res) => {
 
   const user_otp = new Otp({ user_id: user._id, value: otp });
   await user_otp.save();
-  let emailRes = await ourMail(user.email, otp);
-  res.send(emailRes);
+  await ourMail(user.email, otp);
+
+  // res.send(JSON.stringify(emailRes));
   // await user.save();
   // console.log(token);
   // return res.status(200).send({ token });
