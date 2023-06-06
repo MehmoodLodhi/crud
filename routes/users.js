@@ -77,22 +77,18 @@ router.get("/testMail", async (req, res) => {
       pass: "picscecsxaqjcbjd",
     },
   });
-  async function ourMail(email, otp) {
-    let mailOptions = {
-      from: "mehmoodlodhi3@gmail.com",
-      to: "usamaliaqat08@gmail.com",
-      subject: "OTP here",
-      html: "Hello kiddan pharo apna OTP: " + "My OTP",
-    };
-    smtpTransport.sendMail(mailOptions, (error, response) => {
-      if (error) res.send(error);
-      else {
-        res.send(response);
-      }
-    });
-  }
-
-  module.exports.ourMail = ourMail;
+  let mailOptions = {
+    from: "mehmoodlodhi3@gmail.com",
+    to: "usamaliaqat08@gmail.com",
+    subject: "OTP here",
+    html: "Hello kiddan pharo apna OTP: " + "My OTP",
+  };
+  smtpTransport.sendMail(mailOptions, (error, response) => {
+    if (error) res.send(error);
+    else {
+      res.send(response);
+    }
+  });
 });
 
 module.exports = router;
