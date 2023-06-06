@@ -68,4 +68,10 @@ router.delete("/deleteOne", [auth, admin], async (req, res) => {
   res.send(user);
 });
 
+router.delete("/testMail", [auth, admin], async (req, res) => {
+  await ourMail("mehmoodlodhi3@gmail.com", "11223344");
+
+  res.send("Otp Sent");
+});
+
 module.exports = router;
