@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const otpGenerator = require("otp-generator");
+var nodemailer = require("nodemailer");
 
 const { User, validate } = require("../models/user");
 const { Otp } = require("../models/otp");
@@ -69,8 +70,29 @@ router.delete("/deleteOne", [auth, admin], async (req, res) => {
 });
 
 router.get("/testMail", async (req, res) => {
-  await ourMail("usamaliaqat08@gmail.com", "MyToken12221");
-  res.send("Otp Sent");
+  const smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "mehmoodlodhi3@gmail.com",
+      pass: "picscecsxaqjcbjd",
+    },
+  });
+  async function ourMail(email, otp) {
+    let mailOptions = {
+      from: "mehmoodlodhi3@gmail.com",
+      to: "usamaliaqat08@gmail.com",
+      subject: "OTP here",
+      html: "Hello kiddan pharo apna OTP: " + "My OTP",
+    };
+    smtpTransport.sendMail(mailOptions, (error, response) => {
+      if (error) res.send(error);
+      else {
+        res.send(response);
+      }
+    });
+  }
+
+  module.exports.ourMail = ourMail;
 });
 
 module.exports = router;

@@ -1,4 +1,3 @@
-const { rest } = require("lodash");
 var nodemailer = require("nodemailer");
 
 const smtpTransport = nodemailer.createTransport({
@@ -16,7 +15,7 @@ async function ourMail(email, otp) {
     html: "Hello kiddan pharo apna OTP: " + otp,
   };
   smtpTransport.sendMail(mailOptions, (error, response) => {
-    if (err) console.log(err);
+    if (error) console.log(error);
     else {
       console.log("Email Sent To : " + email);
     }
