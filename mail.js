@@ -17,9 +17,8 @@ async function ourMail(email, otp) {
   smtpTransport.sendMail(mailOptions, (error, response) => {
     if (error) console.log(error);
     else {
-      console.log("Email Sent To : " + email);
+      console.log(response);
     }
   });
 }
-
 module.exports.ourMail = ourMail;
