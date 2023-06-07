@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require("path")
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
@@ -22,6 +24,19 @@ app.use("/api/appointment", appointment);
 app.use("/api/otp", otp);
 app.get("/", (req, res) => {
   res.send("Server Configured ");
+});
+
+app.get("/file/:name", (req, res) => {
+  console.log(req.params.name)
+  let filename = req.params.name
+
+  console.log(filename.split(".")[1])
+  const readfile = filename.split(".")[1] == "json" ? JSON.parse(fs.readFileSync(req.params.name)) : fs.readFileSync(req.params.name);
+  res.setHeader('Content-Type', `application/${filename.split(".")[1]}`);
+  res.setHeader('Content-Disposition', `attachment; filename=${req.params.name}`);
+
+  res.send(readfile)
+
 });
 async function db() {
   await mongoose
