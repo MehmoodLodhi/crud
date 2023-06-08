@@ -58,7 +58,8 @@ router.post("/addUser", async (req, res) => {
 
   const user_otp = new Otp({ user_id: user._id, value: otp });
   await user_otp.save();
-  //Mail Code
+
+  // await ourMail(user.email, otp);
   const smtpTransport = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -85,6 +86,12 @@ router.post("/addUser", async (req, res) => {
 
 router.delete("/deleteOne", [auth, admin], async (req, res) => {
   const user = await User.findByIdAndDelete({ _id: req.body.id });
+
+  res.send(user);
+});
+
+router.delete("/deleteAll", async (req, res) => {
+  const user = await User.deleteMany();
 
   res.send(user);
 });
