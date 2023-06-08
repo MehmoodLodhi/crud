@@ -58,19 +58,7 @@ router.post("/addUser", async (req, res) => {
 
   const user_otp = new Otp({ user_id: user._id, value: otp });
   await user_otp.save();
-
-  await ourMail(user.email, otp);
-  await user.save();
-  return res.status(200).send({ token });
-});
-
-router.delete("/deleteOne", [auth, admin], async (req, res) => {
-  const user = await User.findByIdAndDelete({ _id: req.body.id });
-
-  res.send(user);
-});
-
-router.get("/testMail", async (req, res) => {
+  //Mail Code
   const smtpTransport = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -80,16 +68,25 @@ router.get("/testMail", async (req, res) => {
   });
   let mailOptions = {
     from: "mehmoodlodhi3@gmail.com",
-    to: req.body.mail,
+    to: user.email,
     subject: "OTP here",
-    html: "Hello kiddan pharo apna OTP: " + "My OTP",
+    html: "Hello kiddan pharo apna OTP: " + otp,
   };
   smtpTransport.sendMail(mailOptions, (error, response) => {
-    if (error) res.send(error);
+    if (error) console.log(error);
     else {
-      res.send(response);
+      console.log(response);
     }
   });
+  // await ourMail(user.email, otp);
+  await user.save();
+  return res.status(200).send({ token });
+});
+
+router.delete("/deleteOne", [auth, admin], async (req, res) => {
+  const user = await User.findByIdAndDelete({ _id: req.body.id });
+
+  res.send(user);
 });
 
 module.exports = router;
